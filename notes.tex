@@ -39,6 +39,8 @@ rule names ending with a $'$ introduce optional features but might cause some pr
 rules for different things might have the same name,
 the section titles should be interpreted as namespaces.
 
+
+
 \subsection{Boolean}
 \[e ::= true | false | ¬ e | e ∧ e\]
 \[v ::= true | false\]
@@ -64,13 +66,15 @@ the section titles should be interpreted as namespaces.
 \infer[(And)]{e₁ ∧ e₂: Bool}{e₁: Bool \hspace{1em} e₂: Bool} \vspace{1em}
 
 
+
+
 \subsection{Arithmetic}
-\[e ::= <n> | e + e\]
-\[v ::= <n> \]
+\[e ::= ⟨n⟩ | e + e\]
+\[v ::= ⟨n⟩ \]
 \[T ::= Num\]
 \subsubsection{Contraction}
 
-\infer[(Plus)]{<n> + <m> → <n + m>}{} \vspace{1em}
+\infer[(Plus)]{⟨n⟩ + ⟨m⟩ → ⟨n + m⟩}{} \vspace{1em}
 
 \subsubsection{Congruence}
 \infer[(PlusLeft)]{e + e₀ → e' ∧ e₀}{e → e'} \vspace{1em}
@@ -78,33 +82,39 @@ the section titles should be interpreted as namespaces.
 \infer[(PlusRight*)]{e₀ + e → e₀ + e'}{e → e'} \vspace{1em}
 
 \subsubsection{Types}
-\infer[(Num)]{<n>: Num}{}  \vspace{1em}
+\infer[(Num)]{⟨n⟩: Num}{}  \vspace{1em}
 \infer[(Plus)]{e₁ + e₂: Num}{e₁: Num \hspace{1em} e₂: Num} \vspace{1em}
+
+
+
 
 \subsection{Conditionals}
 These kinda require Arithmetics and Booleans as a base.
-\[e ::= e == e | e ? e : e\]
+\[e ::= e == e | e ? e !! e\]
 \subsubsection{Contraction}
 
-\infer[(EqualTrue)]{<n> == <n> → true}{} \vspace{1em}
+\infer[(EqualTrue)]{⟨n⟩ == ⟨n⟩ → true}{} \vspace{1em}
 \infer[(EqualTrue')]{v == v → true}{} \vspace{1em}
-\infer[(EqualFalse)]{<n> == <m> → false}{n \ne m} \vspace{1em}
+\infer[(EqualFalse)]{⟨n⟩ == ⟨m⟩ → false}{n \ne m} \vspace{1em}
 \infer[(EqualFalse')]{ v₁ == v₂ → false}{v₁ \ne v₂} \vspace{1em}
-\infer[(IfTrue)]{true ? e₁ : e₂ → e₁}{} \vspace{1em}
-\infer[(IfFalse)]{false ? e₁ : e₂ → e₁}{} \vspace{1em}
+\infer[(IfTrue)]{true ?? e₁ !! e₂ → e₁}{} \vspace{1em}
+\infer[(IfFalse)]{false ?? e₁ !! e₂ → e₁}{} \vspace{1em}
 
 \subsubsection{Congruence}
 \infer[(EqualLeft)]{e == e₀ → e' ∧ e₀}{e → e'} \vspace{1em}
 \infer[(EqualRight)]{v == e → v == e'}{e → e'} \vspace{1em}
 \infer[(EqualRight*)]{e₀ == e → e₀ == e'}{e → e'} \vspace{1em}
-\infer[(If)]{e ? e₁ : e₂ → e' ? e₁ : e₂}{e → e'} \vspace{1em}
+\infer[(If)]{e ?? e₁ !! e₂ → e' ?? e₁ !! e₂}{e → e'} \vspace{1em}
 
 \subsubsection{Types}
 \infer[(Equal)]{e₁ == e₂: Bool}{e₁: Num \hspace{1em} e₂: Num} \vspace{1em}
 \infer[(Equal')]{e₁ == e₂: Bool}{e₁: T \hspace{1em} e₂: T} \vspace{1em}
-\infer[(If)]{e ? e₁ : e₂: T}{e: Bool \hspace{1em} e₁: T \hspace{1em} e₂: T} \vspace{1em}
-\infer[(IfTrue')]{e ? e₁ : e₂: T}{e →* true \hspace{1em} e₁: T} \vspace{1em}
-\infer[(IfFalse')]{e ? e₁ : e₂: T}{e →* false \hspace{1em} e₂: T} \vspace{1em}
+\infer[(If)]{e ?? e₁ !! e₂: T}{e: Bool \hspace{1em} e₁: T \hspace{1em} e₂: T} \vspace{1em}
+\infer[(IfTrue')]{e ?? e₁ !! e₂: T}{e →^* true \hspace{1em} e₁: T} \vspace{1em}
+\infer[(IfFalse')]{e ?? e₁ !! e₂: T}{e →^* false \hspace{1em} e₂: T} \vspace{1em}
+
+
+
 
 \subsection{Functions}
 \[e ::= λx. e | e e | x\]
@@ -121,10 +131,12 @@ These kinda require Arithmetics and Booleans as a base.
 
 
 \subsubsection{Types}
-\infer[(Equal)]{e₁ == e₂: Bool}{e₁: Num \hspace{1em} e₂: Num} \vspace{1em}
-\infer[(Equal')]{e₁ == e₂: Bool}{e₁: T \hspace{1em} e₂: T} \vspace{1em}
-\infer[(If)]{e ? e₁ : e₂: T}{e: Bool \hspace{1em} e₁: T \hspace{1em} e₂: T} \vspace{1em}
-\infer[(IfTrue')]{e ? e₁ : e₂: T}{e →* true \hspace{1em} e₁: T} \vspace{1em}
-\infer[(IfFalse')]{e ? e₁ : e₂: T}{e →* false \hspace{1em} e₂: T} \vspace{1em}
+type rules for variables do use a context $Γ$ if lambda calculus is combined with
+some of the other rules you have to pass the context through all the other type rules.
+
+\infer[(Variable)]{Γ \vdash x: T}{Γ(x) = T} \vspace{1em}
+\infer[(Abstraction)]{Γ \vdash (λx:T. e): T → T'}{Γ, x: T \vdash e: T'} \vspace{1em}
+\infer[(Application)]{Γ \vdash e₁ e₂: T'}{Γ \vdash e₁: T → T' \hspace{1em} Γ \vdash e₂: T'} \vspace{1em}
+
 
 \end{document}
