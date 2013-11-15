@@ -1,0 +1,130 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[mathletters]{ucs}
+\usepackage[utf8x]{inputenc}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{verbatim}
+\usepackage{proof}
+\usepackage{eurosym}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{syntax}
+\usetikzlibrary{arrows,shapes,automata}
+%\geometry{a4paper,left=20mm,right=20mm, top=2cm, bottom=2cm}
+
+\begin{comment}
+nützliche befehle
+\stackrel{oben}{unten}
+\mathcal \mathfrak \mathbb
+\operatorname{operator}
+\newcommand{\makroname}{ was das makro ausgibt }
+\infer[name]{unten}{oben}
+\end{comment}
+
+\newcommand{\on}{\operatorname}
+\newcommand{\I}{\mathfrak{I}}
+\newcommand{\A}{\mathfrak{A}}
+
+\begin{document}
+
+\section{Syntax and Semantics}
+$e$ is some expression.
+$v$ is some value.
+$T$ is some type.
+$x$ is some variable.
+rule names ending with a $*$ are optional and could be convenient but will often cause nondeterminism.
+rule names ending with a $'$ introduce optional features but might cause some problems.
+rules for different things might have the same name,
+the section titles should be interpreted as namespaces.
+
+\subsection{Boolean}
+\[e ::= true | false | ¬ e | e ∧ e\]
+\[v ::= true | false\]
+\[T ::= Bool\]
+\subsubsection{Contraction}
+
+\infer[(NotTrue)]{¬true → false}{} \vspace{1em}
+\infer[(NotFalse)]{¬false → true}{} \vspace{1em}
+\infer[(AndTrue)]{true ∧ e → e}{} \vspace{1em}
+\infer[(AndTrue*)]{e ∧ true → e}{} \vspace{1em}
+\infer[(AndFalse)]{false ∧ e → false}{} \vspace{1em}
+\infer[(AndFalse*)]{e ∧ false → false}{} \vspace{1em}
+
+\subsubsection{Congruence}
+\infer[(Not)]{¬e → ¬e'}{e → e'} \vspace{1em}
+\infer[(And)]{e ∧ e₀ → e' ∧ e₀}{e → e'} \vspace{1em}
+\infer[(And*)]{e₀ ∧ e → e₀ ∧ e'}{e → e'} \vspace{1em}
+
+\subsubsection{Types}
+\infer[(True)]{true: Bool}{}  \vspace{1em}
+\infer[(False)]{false: Bool}{} \vspace{1em}
+\infer[(Not)]{¬e: Bool}{e: Bool} \vspace{1em}
+\infer[(And)]{e₁ ∧ e₂: Bool}{e₁: Bool \hspace{1em} e₂: Bool} \vspace{1em}
+
+
+\subsection{Arithmetic}
+\[e ::= <n> | e + e\]
+\[v ::= <n> \]
+\[T ::= Num\]
+\subsubsection{Contraction}
+
+\infer[(Plus)]{<n> + <m> → <n + m>}{} \vspace{1em}
+
+\subsubsection{Congruence}
+\infer[(PlusLeft)]{e + e₀ → e' ∧ e₀}{e → e'} \vspace{1em}
+\infer[(PlusRight)]{v + e → v + e'}{e → e'} \vspace{1em}
+\infer[(PlusRight*)]{e₀ + e → e₀ + e'}{e → e'} \vspace{1em}
+
+\subsubsection{Types}
+\infer[(Num)]{<n>: Num}{}  \vspace{1em}
+\infer[(Plus)]{e₁ + e₂: Num}{e₁: Num \hspace{1em} e₂: Num} \vspace{1em}
+
+\subsection{Conditionals}
+These kinda require Arithmetics and Booleans as a base.
+\[e ::= e == e | e ? e : e\]
+\subsubsection{Contraction}
+
+\infer[(EqualTrue)]{<n> == <n> → true}{} \vspace{1em}
+\infer[(EqualTrue')]{v == v → true}{} \vspace{1em}
+\infer[(EqualFalse)]{<n> == <m> → false}{n \ne m} \vspace{1em}
+\infer[(EqualFalse')]{ v₁ == v₂ → false}{v₁ \ne v₂} \vspace{1em}
+\infer[(IfTrue)]{true ? e₁ : e₂ → e₁}{} \vspace{1em}
+\infer[(IfFalse)]{false ? e₁ : e₂ → e₁}{} \vspace{1em}
+
+\subsubsection{Congruence}
+\infer[(EqualLeft)]{e == e₀ → e' ∧ e₀}{e → e'} \vspace{1em}
+\infer[(EqualRight)]{v == e → v == e'}{e → e'} \vspace{1em}
+\infer[(EqualRight*)]{e₀ == e → e₀ == e'}{e → e'} \vspace{1em}
+\infer[(If)]{e ? e₁ : e₂ → e' ? e₁ : e₂}{e → e'} \vspace{1em}
+
+\subsubsection{Types}
+\infer[(Equal)]{e₁ == e₂: Bool}{e₁: Num \hspace{1em} e₂: Num} \vspace{1em}
+\infer[(Equal')]{e₁ == e₂: Bool}{e₁: T \hspace{1em} e₂: T} \vspace{1em}
+\infer[(If)]{e ? e₁ : e₂: T}{e: Bool \hspace{1em} e₁: T \hspace{1em} e₂: T} \vspace{1em}
+\infer[(IfTrue')]{e ? e₁ : e₂: T}{e →* true \hspace{1em} e₁: T} \vspace{1em}
+\infer[(IfFalse')]{e ? e₁ : e₂: T}{e →* false \hspace{1em} e₂: T} \vspace{1em}
+
+\subsection{Functions}
+\[e ::= λx. e | e e | x\]
+
+\subsubsection{Contraction}
+\infer[(Application)]{(λx. e) v → e[x/v]}{} \vspace{1em}
+\infer[(Application*)]{(λx. e₁) e₂ → e₁[x/e₂]}{} \vspace{1em}
+
+\subsubsection{Congruence}
+\infer[(ApplicationFunction)]{e e₀ → e' e₀}{e → e'} \vspace{1em}
+\infer[(ApplicationArgument)]{v e → v e'}{e → e'} \vspace{1em}
+\infer[(ApplicationArgument*)]{e₀ e → e₀ e'}{e → e'} \vspace{1em}
+\infer[(Abstraction')]{(λx. e) → (λx. e')}{e → e'} \vspace{1em}
+
+
+\subsubsection{Types}
+\infer[(Equal)]{e₁ == e₂: Bool}{e₁: Num \hspace{1em} e₂: Num} \vspace{1em}
+\infer[(Equal')]{e₁ == e₂: Bool}{e₁: T \hspace{1em} e₂: T} \vspace{1em}
+\infer[(If)]{e ? e₁ : e₂: T}{e: Bool \hspace{1em} e₁: T \hspace{1em} e₂: T} \vspace{1em}
+\infer[(IfTrue')]{e ? e₁ : e₂: T}{e →* true \hspace{1em} e₁: T} \vspace{1em}
+\infer[(IfFalse')]{e ? e₁ : e₂: T}{e →* false \hspace{1em} e₂: T} \vspace{1em}
+
+\end{document}
