@@ -162,12 +162,11 @@ $e → e₁, e → e₂ ⇒ ∃e' e₁ → e', e₂ → e'$
 \subsection{Termination}
 $e →^* v$ because $e → e' ⇒ size(e) > size(e')$
 
-\subsection{Inversion Lemma}
+\subsection{Inversion}
 Type of Expression follows from structure.
 
 \subsection{Canonical Forms}
-Expression of some type can only have certain values.
-lemma type => value group
+The possible values of a type are known.
 
 \subsection{Progress}
 $e:T$ and $e$ is not value then $e → e'$
@@ -178,7 +177,7 @@ $e:T$, $e→e'$ then $e':T$
 \subsection{Soundness}
 Progress and Preservation
 
-\subsection{Substitution Lemma}
+\subsection{Substitution}
 $Γ, x: S \vdash e:T$ and $Γ \vdash s: S$ then $Γ \vdash e[x/s]:T$
 
 
