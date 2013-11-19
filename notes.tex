@@ -117,7 +117,8 @@ These kinda require Arithmetics and Booleans as a base.
 
 
 \subsection{Functions}
-\[e ::= λx. e | e e | x\]
+\[e ::= λx:T. e | e e | x\]
+Be aware that the type of $x$ is usually skipped (erased) when not doing type checking.
 
 \subsubsection{Contraction}
 \infer[(Application)]{(λx. e) v → e[x/v]}{} \vspace{1em}
