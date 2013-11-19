@@ -138,5 +138,47 @@ some of the other rules you have to pass the context through all the other type 
 \infer[(Abstraction)]{Γ \vdash (λx:T. e): T → T'}{Γ, x: T \vdash e: T'} \vspace{1em}
 \infer[(Application)]{Γ \vdash e₁ e₂: T'}{Γ \vdash e₁: T → T' \hspace{1em} Γ \vdash e₂: T'} \vspace{1em}
 
+\subsection{Fixpoint}
+\[e ::= fix(e)\]
+
+\subsubsection{Contraction}
+\infer[(Fixpoint)]{fix(e) → e[rec/fix(e)]}{} \vspace{1em}
+
+\subsubsection{Types}
+\infer[(Fixpoint)]{fix(e): T}{e: T \vdash T} \vspace{1em}
+
+
+
+
+\section{Lemma and Observations}
+
+\subsection{Size and Depth}
+$size(e) \ge depth(e)$
+
+\subsection{Diamond Property}
+$e → e₁, e → e₂ ⇒ ∃e' e₁ → e', e₂ → e'$
+
+\subsection{Termination}
+$e →^* v$ because $e → e' ⇒ size(e) > size(e')$
+
+\subsection{Inversion Lemma}
+Type of Expression follows from structure.
+
+\subsection{Canonical Forms}
+Expression of some type can only have certain values.
+lemma type => value group
+
+\subsection{Progress}
+$e:T$ and $e$ is not value then $e → e'$
+
+\subsection{Preservation}
+$e:T$, $e→e'$ then $e':T$
+
+\subsection{Soundness}
+Progress and Preservation
+
+\subsection{Substitution Lemma}
+$Γ, x: S \vdash e:T$ and $Γ \vdash s: S$ then $Γ \vdash e[x/s]:T$
+
 
 \end{document}
