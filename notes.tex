@@ -151,7 +151,18 @@ some of the other rules you have to pass the context through all the other type 
 
 
 
-\section{Lemma and Observations}
+\section{Lemmas and Observations and Stuff}
+
+\subsection{Substitution}
+
+\begin{itemize}
+\item $x[x/e'] = e'$
+\item $y[x/e'] = y$, if $x ≠ y$
+\item $(e₁ e₂)[x/e'] = e₁[x/e'] e₂[x/e']$
+\item $(λx.e)[x/e'] = λx.e$
+\item $(λx.e)[y/e'] = λx.(e[y/e'])$, if $x ≠ y$, and (by uniqueness of variable assumption) $y ∉ \on{FreeVariables}(e)$
+\end{itemize}
+
 
 \subsection{Size and Depth}
 $size(e) \ge depth(e)$
