@@ -7,6 +7,8 @@ type systems of programming languages <http://www.stg.tu-darmstadt.de/teaching/c
 
 do whatever you want.
 the documents in this repository are public domain.
+if public domain does not work for you,
+you may also buy this for cookies (mail me for prices).
 if you find this useful, great.
 if not see the next section.
 
