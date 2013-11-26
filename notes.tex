@@ -158,6 +158,7 @@ These kinda require Arithmetics and Booleans as a base.
 
 \subsection{Functions}
 \[e ::= λx:T. e | e e | x\]
+\[T ::= T → T\]
 Be aware that the type of $x$ is usually skipped (erased) when not doing type checking.
 
 \subsubsection{Contraction}
@@ -179,6 +180,8 @@ some of the other rules you have to pass the context through all the other type 
 \infer[(Abstraction)]{Γ \vdash (λx:T. e): T → T'}{Γ, x: T \vdash e: T'} \vspace{1em}
 \infer[(Application)]{Γ \vdash e₁ e₂: T'}{Γ \vdash e₁: T → T' \hspace{1em} Γ \vdash e₂: T'} \vspace{1em}
 
+
+
 \subsection{Fixpoint}
 \[e ::= fix(e)\]
 
@@ -187,6 +190,48 @@ some of the other rules you have to pass the context through all the other type 
 
 \subsubsection{Types}
 \infer[(Fixpoint)]{fix(e): T}{e: T \vdash T} \vspace{1em}
+
+
+
+\subsection{Records}
+\[e ::= \{l_i = e_i\} | e.l \]
+\[v ::= \{l_i = v_i\}\]
+\[T ::= \{l_i : T_i\}\]
+Note that $l$ here means a label.
+Also note that most things indexed with $i$ are assumed to quantify over all the possibilities.
+
+\subsubsection{Contraction}
+\infer[(Access)]{\{l_i = v_i\}.l_i → v_i}{} \vspace{1em}
+
+\subsubsection{Congruence}
+\infer[(Record)]{\{l = e, l_i = e_i\} → \{l = e', l_i = e_i\}}{e → e'} \vspace{1em}
+\infer[(Access)]{e.l → e'.l}{e → e'} \vspace{1em}
+
+\subsubsection{Types}
+\infer[(Record)]{\{l_i = e_i\}: \{l_i : T_i\}}{e_i : T_i} \vspace{1em}
+\infer[(Access)]{\{l = e, l_i = e_i\}.l: T}{e : T} \vspace{1em}
+
+
+
+\subsection{Variant}
+\[e ::= <l = e> \on{as} T | \on{case} e \on{of} <l_i = x_i> ⇒ e_i \]
+\[v ::= <l = v> \on{as} T\]
+\[T ::= <l_i: T_i>\]
+Note that $l$ here means a label.
+Also note that most things indexed with $i$ are assumed to quantify over all the possibilities.
+
+\subsubsection{Contraction}
+\infer[(Case)]{\on{case} <l_j = v> \on{of} <l_i = x_i> ⇒ e_i → e_j[x_j/v]}{l_j ∈ \{l_i\}} \vspace{1em}
+
+
+\subsubsection{Congruence}
+\infer[(Case)]{\on{case} e \on{of} <l_i = x_i> ⇒ e_i → \on{case} e' \on{of} <l_i = x_i> ⇒ e_i}{e → e'} \vspace{1em}
+\infer[(Variant)]{<l = e> \on{as} T → <l = e'> \on{as} T}{e → e'} \vspace{1em}
+
+
+\subsubsection{Types}
+\infer[(Variant)]{ <l_j = e> \on{as} <l_i : T_i> : <l_i : T_i> }{e_j : T_j \hspace{1em} l_j ∈ {l_i}} \vspace{1em}
+\infer[(Case)]{ \on{case} e \on{of} <l_i = x_i> ⇒ e_i : T }{e : <l_i : T_i> \hspace{1em} Γ, x_i : T \vdash e_i : T } \vspace{1em}
 
 
 
