@@ -235,6 +235,45 @@ Also note that most things indexed with $i$ are assumed to quantify over all the
 
 
 
+\subsection{State}
+\[e ::= ref(e) | loc(n) | deref(e) | assign(e, e)\]
+\[v ::= loc(i) \]
+\[σ ::= ∅ | [l = v, σ] \]
+\[T ::= Ref T\]
+Be aware, that if state is used in combination together with any other feature,
+then each rule that has $e → e'$ as a premise actually needs something like $e, σ → e, σ'$
+and use the updated store in the conclusion.
+
+\subsubsection{Contraction}
+\infer[(Reference)]{ref(v), σ → loc(l), σ'}{l ∈ \on{Free(σ)} \hspace{1em} σ' = [l = v, σ]} \vspace{1em}
+\infer[(Assign)]{assign(loc(l), v), σ → unit, σ'}{l \not∈ \on{Free(σ)} \hspace{1em} σ' = σ[l = v] } \vspace{1em}
+\infer[(Dereference)]{deref(loc(l)), σ → v, σ}{ σ(l) = v } \vspace{1em}
+
+\subsubsection{Congruence}
+\infer[(Reference)]{ref(e), σ → ref(e'), σ'}{ e, σ → e', σ' } \vspace{1em}
+\infer[(Dereference)]{deref(e), σ → deref(e'), σ'}{ e, σ → e', σ' } \vspace{1em}
+\infer[(AssignLoc)]{assign(e, e₀), σ → assign(e', e₀), σ'}{ e, σ → e', σ' } \vspace{1em}
+\infer[(AssignVal)]{assign(v, e), σ → assign(v, e'), σ'}{ e, σ → e', σ' } \vspace{1em}
+
+\subsubsection{Types}
+coming soon
+
+\subsection{Sequences}
+\[e ::= e; e | unit \]
+\[v ::= unit\]
+\[T ::= Unit\]
+
+\subsubsection{Contraction}
+\infer[(Sequence)]{unit; e → e}{} \vspace{1em}
+
+\subsubsection{Congruence}
+\infer[(Sequence)]{e; e₀ → e'; e₀}{e → e'} \vspace{1em}
+
+\subsubsection{Types}
+\infer[(Unit)]{ unit: Unit }{} \vspace{1em}
+\infer[(Sequence)]{ e₁; e₂ : T }{e₁: Unit \hspace{1em} e₂: T} \vspace{1em}
+
+
 
 \section{Lemmas and Observations and Stuff}
 
