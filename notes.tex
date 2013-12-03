@@ -264,7 +264,7 @@ For type rules one also needs to keep the new type store $Σ$ in all of the othe
 
 \subsubsection{Contraction}
 \infer[(Reference)]{ref(v), σ → loc(l), σ'}{l ∈ \on{Free(σ)} \hspace{1em} σ' = [l = v, σ]} \vspace{1em}
-\infer[(Assignment)]{assign(loc(l), v), σ → unit, σ'}{l \not∈ \on{Free(σ)} \hspace{1em} σ' = σ[l = v] } \vspace{1em}
+\infer[(Assignment)]{assign(loc(l), v), σ → unit, σ'}{l \not∈ \on{Free(σ)} \hspace{1em} σ' = σ[l := v] } \vspace{1em}
 \infer[(Dereference)]{deref(loc(l)), σ → v, σ}{ σ(l) = v } \vspace{1em}
 
 \subsubsection{Congruence}
@@ -322,6 +322,9 @@ Progress and Preservation
 
 \subsection{Substitution}
 $Γ, x: S \vdash e:T$ and $Γ \vdash s: S$ then $Γ \vdash e[x/s]:T$
+
+\subsection{Store Update}
+If $Γ|Σ \vdash σ$, $Σ(l)= T$, $Γ|Σ \vdash v:T$ then $Γ|Σ \vdash σ[l := v]$
 
 
 \end{document}
