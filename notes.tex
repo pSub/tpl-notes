@@ -254,27 +254,30 @@ Also note that most things indexed with $i$ are assumed to quantify over all the
 
 \subsection{State}
 \[e ::= ref(e) | loc(n) | deref(e) | assign(e, e)\]
-\[v ::= loc(i) \]
+\[v ::= loc(l) \]
 \[σ ::= ∅ | [l = v, σ] \]
 \[T ::= Ref T\]
 Be aware, that if state is used in combination together with any other feature,
 then each rule that has $e → e'$ as a premise actually needs something like $e, σ → e, σ'$
 and use the updated store in the conclusion.
+For type rules one also needs to keep the new type store $Σ$ in all of the other rules.
 
 \subsubsection{Contraction}
 \infer[(Reference)]{ref(v), σ → loc(l), σ'}{l ∈ \on{Free(σ)} \hspace{1em} σ' = [l = v, σ]} \vspace{1em}
-\infer[(Assign)]{assign(loc(l), v), σ → unit, σ'}{l \not∈ \on{Free(σ)} \hspace{1em} σ' = σ[l = v] } \vspace{1em}
+\infer[(Assignment)]{assign(loc(l), v), σ → unit, σ'}{l \not∈ \on{Free(σ)} \hspace{1em} σ' = σ[l = v] } \vspace{1em}
 \infer[(Dereference)]{deref(loc(l)), σ → v, σ}{ σ(l) = v } \vspace{1em}
 
 \subsubsection{Congruence}
 \infer[(Reference)]{ref(e), σ → ref(e'), σ'}{ e, σ → e', σ' } \vspace{1em}
 \infer[(Dereference)]{deref(e), σ → deref(e'), σ'}{ e, σ → e', σ' } \vspace{1em}
-\infer[(AssignLoc)]{assign(e, e₀), σ → assign(e', e₀), σ'}{ e, σ → e', σ' } \vspace{1em}
-\infer[(AssignVal)]{assign(v, e), σ → assign(v, e'), σ'}{ e, σ → e', σ' } \vspace{1em}
+\infer[(AssignmentLocation)]{assign(e, e₀), σ → assign(e', e₀), σ'}{ e, σ → e', σ' } \vspace{1em}
+\infer[(AssignmentValue)]{assign(v, e), σ → assign(v, e'), σ'}{ e, σ → e', σ' } \vspace{1em}
 
 \subsubsection{Types}
-coming soon
-
+\infer[(Location)]{Γ|Σ \vdash loc(l): Ref T}{Σ(l) = T}
+\infer[(Dereference)]{Γ|Σ \vdash deref(e): T}{Γ|Σ \vdash e : Ref T}
+\infer[(Reference)]{Γ|Σ \vdash ref(e): Ref T}{Γ|Σ \vdash e : T}
+\infer[(Assignment)]{Γ|Σ \vdash assign(e₁, e₂): Unit}{Γ|Σ \vdash e₁ : Ref T \hspace{1em} Γ|Σ \vdash e₂ : T}
 
 \section{Lemmas and Observations and Stuff}
 
