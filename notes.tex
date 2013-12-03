@@ -312,6 +312,10 @@ $e:T$ and $e$ is not value then $e → e'$
 
 \subsection{Preservation}
 $e:T$, $e→e'$ then $e':T$
+\subsubsection{Preservation with Context}
+$Γ|Σ \vdash σ$ iff $dom(σ) = dom(Σ) ∧ ∀l ∈ dom(σ). Γ|Σ \vdash σ(l) : Σ(l)$
+
+$Γ|Σ \vdash e: T$, $e, σ → e', σ$, $Γ|Σ \vdash σ$ then for some $Σ' \supseteq Σ$, $Γ|Σ' \vdash σ'$, $Γ|Σ' \vdash e' : T$
 
 \subsection{Soundness}
 Progress and Preservation
