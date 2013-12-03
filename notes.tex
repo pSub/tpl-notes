@@ -235,6 +235,23 @@ Also note that most things indexed with $i$ are assumed to quantify over all the
 
 
 
+\subsection{Sequences}
+\[e ::= e; e | unit \]
+\[v ::= unit\]
+\[T ::= Unit\]
+
+\subsubsection{Contraction}
+\infer[(Sequence)]{unit; e → e}{} \vspace{1em}
+
+\subsubsection{Congruence}
+\infer[(Sequence)]{e; e₀ → e'; e₀}{e → e'} \vspace{1em}
+
+\subsubsection{Types}
+\infer[(Unit)]{ unit: Unit }{} \vspace{1em}
+\infer[(Sequence)]{ e₁; e₂ : T }{e₁: Unit \hspace{1em} e₂: T} \vspace{1em}
+
+
+
 \subsection{State}
 \[e ::= ref(e) | loc(n) | deref(e) | assign(e, e)\]
 \[v ::= loc(i) \]
@@ -257,22 +274,6 @@ and use the updated store in the conclusion.
 
 \subsubsection{Types}
 coming soon
-
-\subsection{Sequences}
-\[e ::= e; e | unit \]
-\[v ::= unit\]
-\[T ::= Unit\]
-
-\subsubsection{Contraction}
-\infer[(Sequence)]{unit; e → e}{} \vspace{1em}
-
-\subsubsection{Congruence}
-\infer[(Sequence)]{e; e₀ → e'; e₀}{e → e'} \vspace{1em}
-
-\subsubsection{Types}
-\infer[(Unit)]{ unit: Unit }{} \vspace{1em}
-\infer[(Sequence)]{ e₁; e₂ : T }{e₁: Unit \hspace{1em} e₂: T} \vspace{1em}
-
 
 
 \section{Lemmas and Observations and Stuff}
