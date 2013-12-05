@@ -274,10 +274,10 @@ For type rules one also needs to keep the new type store $Σ$ in all of the othe
 \infer[(AssignmentValue)]{assign(v, e), σ → assign(v, e'), σ'}{ e, σ → e', σ' } \vspace{1em}
 
 \subsubsection{Types}
-\infer[(Location)]{Γ|Σ \vdash loc(l): \on{Ref} T}{Σ(l) = T}
-\infer[(Dereference)]{Γ|Σ \vdash deref(e): T}{Γ|Σ \vdash e : \on{Ref} T}
-\infer[(Reference)]{Γ|Σ \vdash ref(e): \on{Ref} T}{Γ|Σ \vdash e : T}
-\infer[(Assignment)]{Γ|Σ \vdash assign(e₁, e₂): Unit}{Γ|Σ \vdash e₁ : \on{Ref} T \hspace{1em} Γ|Σ \vdash e₂ : T}
+\infer[(Location)]{Γ|Σ \vdash loc(l): \on{Ref} T}{Σ(l) = T} \vspace{1em}
+\infer[(Dereference)]{Γ|Σ \vdash deref(e): T}{Γ|Σ \vdash e : \on{Ref} T} \vspace{1em}
+\infer[(Reference)]{Γ|Σ \vdash ref(e): \on{Ref} T}{Γ|Σ \vdash e : T} \vspace{1em}
+\infer[(Assignment)]{Γ|Σ \vdash assign(e₁, e₂): Unit}{Γ|Σ \vdash e₁ : \on{Ref} T \hspace{1em} Γ|Σ \vdash e₂ : T} \vspace{1em}
 
 \section{Lemmas and Observations and Stuff}
 
