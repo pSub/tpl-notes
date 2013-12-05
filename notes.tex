@@ -256,7 +256,7 @@ Also note that most things indexed with $i$ are assumed to quantify over all the
 \[e ::= ref(e) | loc(n) | deref(e) | assign(e, e)\]
 \[v ::= loc(l) \]
 \[σ ::= ∅ | [l = v, σ] \]
-\[T ::= Ref T\]
+\[T ::= \on{Ref} T\]
 Be aware, that if state is used in combination together with any other feature,
 then each rule that has $e → e'$ as a premise actually needs something like $e, σ → e, σ'$
 and use the updated store in the conclusion.
@@ -274,10 +274,10 @@ For type rules one also needs to keep the new type store $Σ$ in all of the othe
 \infer[(AssignmentValue)]{assign(v, e), σ → assign(v, e'), σ'}{ e, σ → e', σ' } \vspace{1em}
 
 \subsubsection{Types}
-\infer[(Location)]{Γ|Σ \vdash loc(l): Ref T}{Σ(l) = T}
-\infer[(Dereference)]{Γ|Σ \vdash deref(e): T}{Γ|Σ \vdash e : Ref T}
-\infer[(Reference)]{Γ|Σ \vdash ref(e): Ref T}{Γ|Σ \vdash e : T}
-\infer[(Assignment)]{Γ|Σ \vdash assign(e₁, e₂): Unit}{Γ|Σ \vdash e₁ : Ref T \hspace{1em} Γ|Σ \vdash e₂ : T}
+\infer[(Location)]{Γ|Σ \vdash loc(l): \on{Ref} T}{Σ(l) = T}
+\infer[(Dereference)]{Γ|Σ \vdash deref(e): T}{Γ|Σ \vdash e : \on{Ref} T}
+\infer[(Reference)]{Γ|Σ \vdash ref(e): \on{Ref} T}{Γ|Σ \vdash e : T}
+\infer[(Assignment)]{Γ|Σ \vdash assign(e₁, e₂): Unit}{Γ|Σ \vdash e₁ : \on{Ref} T \hspace{1em} Γ|Σ \vdash e₂ : T}
 
 \section{Lemmas and Observations and Stuff}
 
