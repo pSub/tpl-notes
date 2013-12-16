@@ -279,6 +279,74 @@ For type rules one also needs to keep the new type store $Σ$ in all of the othe
 \infer[(Reference)]{Γ|Σ \vdash ref(e): \on{Ref} T}{Γ|Σ \vdash e : T} \vspace{1em}
 \infer[(Assignment)]{Γ|Σ \vdash assign(e₁, e₂): Unit}{Γ|Σ \vdash e₁ : \on{Ref} T \hspace{1em} Γ|Σ \vdash e₂ : T} \vspace{1em}
 
+
+
+\subsection{Exceptions}
+\[e ::= error | segfault \]
+\[v ::= error | segfault \]
+
+The introduction of error changes all prior rules,
+such that if an error would be evaluated as part of a subexpression.
+the whole expression evaluates to an error.
+
+\subsubsection{Types}
+\infer[(Error)]{ error: T }{} \vspace{1em}
+
+
+
+
+\subsection{Catch}
+\[e ::= \on{try} e \on{with} e \]
+\[v ::= v \\ error \]
+
+\subsubsection{Contraction}
+\infer[(TryError)]{\on{try} error \on{with} e → e}{} \vspace{1em}
+\infer[(TryValue)]{\on{try} v \on{with} e → v}{} \vspace{1em}
+
+\subsubsection{Congruence}
+\infer[(Try)]{\on{try} e \on{with} e₀ → \on{try} e' \on{with} e₀}{e → e'} \vspace{1em}
+
+\subsubsection{Types}
+\infer[(Try)]{ \on{try} e₁ \on{with} e₂ : T }{ e₁: T \hspace{1em} e₂: T} \vspace{1em}
+
+
+
+
+\subsection{Raise}
+\[e ::= raise(e) \]
+\[v ::= raise(v) \]
+
+\subsubsection{Contraction}
+\infer[(Raise)]{raise(raise(v)) → raise(v)}{} \vspace{1em}
+\infer[(TryRaise)]{\on{try} raise(v) \on{with} e → e v}{} \vspace{1em}
+(if this rule is applicaple it is used instead of Catch.TryValue)
+
+\subsubsection{Types}
+\infer[(Raise)]{ raise(e): T }{ e: T exn } \vspace{1em}
+\infer[(Try)]{ \on{try} e₁ \on{with} e₂ : T }{ e₁: T \hspace{1em} e₂: T exn -> T} \vspace{1em}
+
+
+
+\subsection{Better Error Handling}
+\[e ::= raise(e, l) | \on{try} e l ⇒ e\]
+\[v ::= raise(v, l)\]
+\[RT ::= T\]
+\[T ::= RT \on{throws} \{l_i\}\]
+(rename the old types to $RT$ regular types and work with types extended with throwable errors)
+
+\subsubsection{Contraction}
+\infer[(Raise)]{raise(l₁, raise(l₂, v)) → raise(l₂, v)}{} \vspace{1em}
+\infer[(TryMatch)]{\on{try} raise(l₁, v) l₂ ⇒ e → e v}{l₁ = l₂} \vspace{1em}
+\infer[(TryMismatch)]{\on{try} raise(l₁, v) l₂ ⇒ e → raise(l₁, v)}{l₁ \neq l₂} \vspace{1em}
+
+\subsubsection{Types}
+\infer[(Raise)]{ raise(l, e): RT \on{throws} \{l, l₁, …, l_n\} }{ e: RT \on{throws} \{l₁, …, l_n\} } \vspace{1em}
+other type rules get extended, such that they return the union of all possible exception labels
+\infer[(Try)]{ \on{try} e₁ l ⇒ e₂ : RT \on{throws} (L₁\\ \{l\} ∪ L₂ ∪ L₃) }{ e: RT \on{throws} (L₁) \hspace{1em} e₂: (RT → RT \on{throws} (L₂)) \on{throws} L₃ } \vspace{1em}
+
+
+
+
 \section{Lemmas and Observations and Stuff}
 
 \subsection{Substitution}
