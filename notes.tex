@@ -345,6 +345,49 @@ other type rules get extended, such that they return the union of all possible e
 \infer[(Try)]{ \on{try} e₁ l ⇒ e₂ : RT \on{throws} (L₁\\ \{l\} ∪ L₂ ∪ L₃) }{ e: RT \on{throws} (L₁) \hspace{1em} e₂: (RT → RT \on{throws} (L₂)) \on{throws} L₃ } \vspace{1em}
 
 
+\subsection{Subtyping}
+\[T ::= … | Top\]
+
+\subsubsection{Types}
+\infer[(RecordSubtype)]{\{l_i: T_i ^{1..m}\} <: \{k_j : U_j ^{1..n}\}}{\{l_i^{1..m}\} \supseteq \{k_i ^{1..n}\} \hspace{1em} T_i <: U_j \on{when} l_i = k_i}  \vspace{1em}
+\infer[(Variance)]{T₁ → T₂ <: U₁ → U₁}{U₁ <: T₁ \hspace{1em} T₂ <: U₂}  \vspace{1em}
+\infer[(Subtype)]{Γ \vdash e: U}{T <: U \hspace{1em} Γ \vdash e: T} \vspace{1em}
+\infer[(Transitivity)]{T₁ <: T₃}{T₁ <: T₂ \hspace{1em} T₂ <: T₃} \vspace{1em}
+\infer[(Reflexivity)]{T <: T}{} \vspace{1em}
+\infer[(Top)]{T <: Top}{} \vspace{1em}
+
+\subsection{Objects}
+\[e ::= \on{New}(c, \overline{e})|e.f | e.m(\overline{e})| x | (c) e \]
+\[T ::= c\]
+$c$ class; $f$ field; $m$ method
+
+
+\subsection{Parametric Polymorphism}
+\[e ::= x | λx: T. e | e e | λα.e | e[T]\]
+\[T ::= α | T → T | ∀α.T\]
+
+\infer[()]{e[T] → e'[T]}{e → e'} \vspace{1em}
+\infer[()]{(λα.e)[T] → e[α := T]}{} \vspace{1em}
+\subsubsection{Types}
+\infer[()]{Γ \vdash e[T] : T₁[α := T] }{Γ \vdash e: ∀α. T₁} \vspace{1em}
+\infer[()]{Γ \vdash λα.e : ∀α.T}{Γ,α \vdash e: T} \vspace{1em}
+
+\begin{equation*}
+x[α:=T] → x\\
+e₁ e₂[α:=T] → e₁[α:= T] e₂[α:=T]\\
+(λx:T₁.e)[α:=T] → λx:T₁[α:=T].e[α:=T]\\
+(λβ.e)[α:=T] → λβ.e[a:=T], β\not∈\on{freeTV}(e)\\
+(e[T₁])[α:=T] → (e[α:=T])[T₁[α:=T]]
+\end{equation*}
+
+
+\subsection{Type Inference}
+
+\infer[(Lambda)]{Γ \vdash λx. e: α → T | C}{Γ,x:α \vdash e : T | C  (α \on{fresh})} \vspace{1em}
+\infer[(Application)]{Γ \vdash e₁ e₂ : β | \{T₁ = α → β, T₂ = α\} ∪ C₁ ∪ C₂}{Γ \vdash e₁ : α → β | C₁ \hspace{1em} Γ \vdash e₂ : T₂ | C₂} \vspace{1em}
+
+
+
 
 
 \section{Lemmas and Observations and Stuff}
