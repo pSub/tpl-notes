@@ -372,13 +372,13 @@ $c$ class; $f$ field; $m$ method
 \infer[()]{Γ \vdash e[T] : T₁[α := T] }{Γ \vdash e: ∀α. T₁} \vspace{1em}
 \infer[()]{Γ \vdash λα.e : ∀α.T}{Γ,α \vdash e: T} \vspace{1em}
 
-\begin{equation*}
-x[α:=T] → x\\
-e₁ e₂[α:=T] → e₁[α:= T] e₂[α:=T]\\
-(λx:T₁.e)[α:=T] → λx:T₁[α:=T].e[α:=T]\\
-(λβ.e)[α:=T] → λβ.e[a:=T], β\not∈\on{freeTV}(e)\\
-(e[T₁])[α:=T] → (e[α:=T])[T₁[α:=T]]
-\end{equation*}
+\begin{eqnarray*}
+x[α:=T] &→& x\\
+e₁ e₂[α:=T] &→& e₁[α:= T] e₂[α:=T]\\
+(λx:T₁.e)[α:=T] &→& λx:T₁[α:=T].e[α:=T]\\
+(λβ.e)[α:=T] &→& λβ.e[a:=T], β\not∈\on{freeTV}(e)\\
+(e[T₁])[α:=T] &→& (e[α:=T])[T₁[α:=T]]
+\end{eqnarray*}
 
 
 \subsection{Type Inference}
