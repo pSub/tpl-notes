@@ -366,11 +366,13 @@ $c$ class; $f$ field; $m$ method
 \[e ::= x | λx: T. e | e e | λα.e | e[T]\]
 \[T ::= α | T → T | ∀α.T\]
 
-\infer[()]{e[T] → e'[T]}{e → e'} \vspace{1em}
-\infer[()]{(λα.e)[T] → e[α := T]}{} \vspace{1em}
+\subsubsection{Contraction}
+\infer[(TypeApplication)]{(λα.e)[T] → e[α := T]}{} \vspace{1em}
+\subsubsection{Congruence}
+\infer[(TypeApplication)]{e[T] → e'[T]}{e → e'} \vspace{1em}
 \subsubsection{Types}
-\infer[()]{Γ \vdash e[T] : T₁[α := T] }{Γ \vdash e: ∀α. T₁} \vspace{1em}
-\infer[()]{Γ \vdash λα.e : ∀α.T}{Γ,α \vdash e: T} \vspace{1em}
+\infer[(TypeApplication)]{Γ \vdash e[T] : T₁[α := T] }{Γ \vdash e: ∀α. T₁} \vspace{1em}
+\infer[(TypeAbstraction)]{Γ \vdash λα.e : ∀α.T}{Γ,α \vdash e: T} \vspace{1em}
 
 \begin{eqnarray*}
 x[α:=T] &→& x\\
