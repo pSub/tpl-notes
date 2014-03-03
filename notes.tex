@@ -386,7 +386,7 @@ e₁ e₂[α:=T] &→& e₁[α:= T] e₂[α:=T]\\
 \subsection{Type Inference}
 
 \infer[(Lambda)]{Γ \vdash λx. e: α → T | C}{Γ,x:α \vdash e : T | C  (α \on{fresh})} \vspace{1em}
-\infer[(Application)]{Γ \vdash e₁ e₂ : β | \{T₁ = α → β, T₂ = α\} ∪ C₁ ∪ C₂}{Γ \vdash e₁ : α → β | C₁ \hspace{1em} Γ \vdash e₂ : T₂ | C₂} \vspace{1em}
+\infer[(Application)]{Γ \vdash e₁ e₂ : β | \{T₁ = α → β, T₂ = α\} ∪ C₁ ∪ C₂}{Γ \vdash e₁ : T₁ | C₁ \hspace{1em} Γ \vdash e₂ : T₂ | C₂} \vspace{1em}
 
 
 
