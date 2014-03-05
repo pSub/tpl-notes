@@ -117,7 +117,7 @@ the section titles should be interpreted as namespaces.
 \infer[(Plus)]{⟨n⟩ + ⟨m⟩ → ⟨n + m⟩}{} \vspace{1em}
 
 \subsubsection{Congruence}
-\infer[(PlusLeft)]{e + e₀ → e' ∧ e₀}{e → e'} \vspace{1em}
+\infer[(PlusLeft)]{e + e₀ → e' + e₀}{e → e'} \vspace{1em}
 \infer[(PlusRight)]{v + e → v + e'}{e → e'} \vspace{1em}
 \infer[(PlusRight*)]{e₀ + e → e₀ + e'}{e → e'} \vspace{1em}
 
@@ -130,7 +130,7 @@ the section titles should be interpreted as namespaces.
 
 \subsection{Conditionals}
 These kinda require Arithmetics and Booleans as a base.
-\[e ::= e == e | e ? e !! e\]
+\[e ::= e == e | e ?? e !! e\]
 \subsubsection{Contraction}
 
 \infer[(EqualTrue)]{⟨n⟩ == ⟨n⟩ → true}{} \vspace{1em}
@@ -141,7 +141,7 @@ These kinda require Arithmetics and Booleans as a base.
 \infer[(IfFalse)]{false ?? e₁ !! e₂ → e₁}{} \vspace{1em}
 
 \subsubsection{Congruence}
-\infer[(EqualLeft)]{e == e₀ → e' ∧ e₀}{e → e'} \vspace{1em}
+\infer[(EqualLeft)]{e == e₀ → e' == e₀}{e → e'} \vspace{1em}
 \infer[(EqualRight)]{v == e → v == e'}{e → e'} \vspace{1em}
 \infer[(EqualRight*)]{e₀ == e → e₀ == e'}{e → e'} \vspace{1em}
 \infer[(If)]{e ?? e₁ !! e₂ → e' ?? e₁ !! e₂}{e → e'} \vspace{1em}
