@@ -230,8 +230,8 @@ Also note that most things indexed with $i$ are assumed to quantify over all the
 
 
 \subsubsection{Types}
-\infer[(Variant)]{ <l_j = e> \on{as} <l_i : T_i> : <l_i : T_i> }{e_j : T_j \hspace{1em} l_j ∈ {l_i}} \vspace{1em}
-\infer[(Case)]{ \on{case} e \on{of} <l_i = x_i> ⇒ e_i : T }{e : <l_i : T_i> \hspace{1em} Γ, x_i : T \vdash e_i : T } \vspace{1em}
+\infer[(Variant)]{ <l_j = e_j> \on{as} <l_i : T_i> : <l_i : T_i> }{e_j : T_j \hspace{1em} l_j ∈ {l_i}} \vspace{1em}
+\infer[(Case)]{ \on{case} e \on{of} <l_i = x_i> ⇒ e_i : T }{e : <l_i : T_i> \hspace{1em} Γ, x_i : T_i \vdash e_i : T } \vspace{1em}
 
 
 
