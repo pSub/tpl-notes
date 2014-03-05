@@ -350,8 +350,9 @@ other type rules get extended, such that they return the union of all possible e
 
 \subsubsection{Types}
 \infer[(RecordSubtype)]{\{l_i: T_i ^{1..m}\} <: \{k_j : U_j ^{1..n}\}}{\{l_i^{1..m}\} \supseteq \{k_i ^{1..n}\} \hspace{1em} T_i <: U_j \on{when} l_i = k_i}  \vspace{1em}
-\infer[(Variance)]{T₁ → T₂ <: U₁ → U₁}{U₁ <: T₁ \hspace{1em} T₂ <: U₂}  \vspace{1em}
-\infer[(Subtype)]{Γ \vdash e: U}{T <: U \hspace{1em} Γ \vdash e: T} \vspace{1em}
+\infer[(Variance)]{<l_i: T_i ^{1..m}> <: <k_j : U_j ^{1..n}>}{\{l_i^{1..m}\} \subseteq \{k_i ^{1..n}\} \hspace{1em} T_i <: U_j \on{when} l_i = k_i} \vspace{1em}
+\infer[(Arrow)]{T₁ → T₂ <: U₁ → U₁}{U₁ <: T₁ \hspace{1em} T₂ <: U₂}  \vspace{1em}
+\infer[(Subsumption)]{Γ \vdash e: U}{T <: U \hspace{1em} Γ \vdash e: T} \vspace{1em}
 \infer[(Transitivity)]{T₁ <: T₃}{T₁ <: T₂ \hspace{1em} T₂ <: T₃} \vspace{1em}
 \infer[(Reflexivity)]{T <: T}{} \vspace{1em}
 \infer[(Top)]{T <: Top}{} \vspace{1em}
