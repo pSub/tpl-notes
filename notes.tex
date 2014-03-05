@@ -178,7 +178,7 @@ some of the other rules you have to pass the context through all the other type 
 
 \infer[(Variable)]{Γ \vdash x: T}{Γ(x) = T} \vspace{1em}
 \infer[(Abstraction)]{Γ \vdash (λx:T. e): T → T'}{Γ, x: T \vdash e: T'} \vspace{1em}
-\infer[(Application)]{Γ \vdash e₁ e₂: T'}{Γ \vdash e₁: T → T' \hspace{1em} Γ \vdash e₂: T'} \vspace{1em}
+\infer[(Application)]{Γ \vdash e₁ e₂: T'}{Γ \vdash e₁: T → T' \hspace{1em} Γ \vdash e₂: T} \vspace{1em}
 
 
 
