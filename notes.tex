@@ -189,7 +189,7 @@ some of the other rules you have to pass the context through all the other type 
 \infer[(Fixpoint)]{fix(e) → e[rec/fix(e)]}{} \vspace{1em}
 
 \subsubsection{Types}
-\infer[(Fixpoint)]{fix(e): T}{e: T \vdash T} \vspace{1em}
+\infer[(Fixpoint)]{fix(e): T}{Γ \vdash e : T → T} \vspace{1em}
 
 
 
