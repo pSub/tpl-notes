@@ -1,3 +1,7 @@
+> [!IMPORTANT]
+> This repository has been moved from GitHub to Codeberg (https://codeberg.org/pSub/tpl-notes). 
+> The GitHub repository is archieved will no longer receive updates. Please update your bookmarks and clones accordingly.
+
 # what is this?
 
 these are or will be “notes” (or maybe a cheat sheet) for the lecture
